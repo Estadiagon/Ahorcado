@@ -9,10 +9,13 @@
  * @author Estudiantes
  */
 public class Interfaz extends javax.swing.JFrame {
+
     String letra;
     char x;
-    
-    Palabras miPalabra= new Palabras();
+    boolean error = true;
+    int intentos = 0;
+    Palabras miPalabra = new Palabras();
+
     public Interfaz() {
         initComponents();
     }
@@ -32,6 +35,11 @@ public class Interfaz extends javax.swing.JFrame {
         PP = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jButton1.setText("Jugar");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -104,34 +112,61 @@ public class Interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        Letra.setEnabled(true);
+        Letra1.setEnabled(true);
+        Letra2.setEnabled(true);
+        Letra3.setEnabled(true);
+        Letra4.setEnabled(true);        
         miPalabra.seleccionar();
         miPalabra.dividir();
         PP.setText(miPalabra.p);
-        
+       intentos=0;
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        letra=Letra.getText();
-        x=letra.charAt(0);
-        for (int i=0;i<4;i++){
-            if(x==miPalabra.letras[i]){
-                if(i==0){
+        letra = Letra.getText();
+        x = letra.charAt(0);
+        for (int i = 0; i < 4; i++) {
+            if (x == miPalabra.letras[i]) {
+                if (i == 0) {
                     Letra1.setText(String.valueOf(miPalabra.letras[i]));
                 }
-                if(i==1){
+                if (i == 1) {
                     Letra2.setText(String.valueOf(miPalabra.letras[i]));
                 }
-                if(i==2){
+                if (i == 2) {
                     Letra3.setText(String.valueOf(miPalabra.letras[i]));
-                }  
-                if(i==3){
+                }
+                if (i == 3) {
                     Letra4.setText(String.valueOf(miPalabra.letras[i]));
-                }     
-
+                }
+                error = false;
             }
         }
-        
+        if (error == true) {
+            PP.setText("error");
+            intentos++;
+        }
+        Letra.setText("");
+        error = true;
+
+        if (intentos == 3) {
+            PP.setText("Yaper......................... NO LO INTENTE MAS");
+            Letra1.setEnabled(false);
+            Letra2.setEnabled(false);
+            Letra3.setEnabled(false);
+            Letra4.setEnabled(false);
+            Letra.setEnabled(false);            
+        }
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        Letra1.setEnabled(false);
+        Letra2.setEnabled(false);
+        Letra3.setEnabled(false);
+        Letra4.setEnabled(false);
+        Letra.setEnabled(false);        
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
