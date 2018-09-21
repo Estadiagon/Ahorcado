@@ -9,5 +9,14 @@
  * @author Estudiantes
  */
 public class Palabras {
-    
+    String p;
+    char letras[];
+    String palabras[]={"COSA","CASO","CASA","ALVR"};
+    void seleccionar(){
+    int x=(int) (Math.random()*4);
+    p=palabras[x];
+    }
+    void dividir(){
+        letras=p.toCharArray();
+    }
 }
